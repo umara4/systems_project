@@ -1,1 +1,9 @@
-/challenge/data/raw/
+# Generated split datasets
+challenge/data/parquet_split/*.parquet
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/

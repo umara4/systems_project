@@ -316,6 +316,7 @@ dependencies = [
     { name = "matplotlib" },
     { name = "mlflow" },
     { name = "pandas" },
+    { name = "pyarrow" },
     { name = "scikit-learn" },
 ]
 
@@ -324,6 +325,7 @@ requires-dist = [
     { name = "matplotlib", specifier = ">=3.11.2" },
     { name = "mlflow", specifier = ">=3.18.0" },
     { name = "pandas", specifier = ">=3.1.1" },
+    { name = "pyarrow", specifier = ">=26.0.1" },
     { name = "scikit-learn", specifier = ">=1.9.1" },
 ]
 
