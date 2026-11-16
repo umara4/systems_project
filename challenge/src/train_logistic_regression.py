@@ -446,6 +446,7 @@ def main(n_trials: int):
         mlflow.sklearn.log_model(
             sk_model=best_model,
             name="logistic_regression_model",
+            skops_trusted_types=["numpy.dtype"],
         )
         mlflow.log_artifact(str(results_path))
         mlflow.log_artifact(str(model_path))
