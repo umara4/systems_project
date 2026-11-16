@@ -18,6 +18,8 @@ Run from challenge/:  uv run python src/clean_data.py
 """
 
 import hashlib
+import os
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import numpy as np
@@ -217,9 +219,15 @@ def write_sha256sums() -> None:
     if not files:
         out(f"\nSHA256SUMS: no .psv files under {RAW_PSV.relative_to(ROOT)}, skipped")
         return
-    with open(RAW_PSV / "SHA256SUMS", "w", newline="\n") as fh:
-        for f in files:
-            fh.write(f"{hashlib.sha256(f.read_bytes()).hexdigest()}  {f.relative_to(RAW_PSV).as_posix()}\n")
+
+    def digest_file(path: Path) -> str:
+        with path.open("rb") as fh:
+            return hashlib.file_digest(fh, "sha256").hexdigest()
+
+    workers = min(8, os.cpu_count() or 1)
+    with ThreadPoolExecutor(max_workers=workers) as pool, open(RAW_PSV / "SHA256SUMS", "w", newline="\n") as fh:
+        for f, digest in zip(files, pool.map(digest_file, files)):
+            fh.write(f"{digest}  {f.relative_to(RAW_PSV).as_posix()}\n")
     out(f"\nSHA256SUMS: hashed {len(files):,} raw files -> {(RAW_PSV / 'SHA256SUMS').relative_to(ROOT)}")
 
 
