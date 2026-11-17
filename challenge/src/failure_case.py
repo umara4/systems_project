@@ -10,7 +10,7 @@ import pandas as pd
 from preprocessing_split_data import OUTPUT_DIR, build_datasets
 from window_eval import window_target
 
-MODEL_PATH = OUTPUT_DIR / "xgb_baseline" / "model.joblib"
+MODEL_PATH = OUTPUT_DIR / "xgboost" / "model.joblib"
 FEATURES = [
     "HR", "O2Sat", "Temp", "SBP", "MAP", "DBP", "Resp",
     "Lactate", "WBC", "Creatinine", "Platelets",
